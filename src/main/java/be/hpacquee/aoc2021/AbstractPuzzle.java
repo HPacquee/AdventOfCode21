@@ -1,4 +1,4 @@
-package net.akaritakai.aoc2021;
+package be.hpacquee.aoc2021;
 
 /**
  * An abstract class that represents a solution to an Advent of Code puzzle.

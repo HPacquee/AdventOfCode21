@@ -1,4 +1,4 @@
-package net.akaritakai.aoc2021;
+package be.hpacquee.aoc2021;
 
 import org.junit.jupiter.api.Test;
 
