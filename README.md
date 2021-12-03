@@ -1,7 +1,7 @@
 # Advent of Code 2021 Solutions
 
 [![Build Status](https://github.com/HPacquee/AdventOfCode21/actions/workflows/main.yml/badge.svg)](https://github.com/HPacquee/AdventOfCode21/actions)
-[![Code Coverage](https://img.shields.io/codecov/c/github/HPacquee/AdventOfCode21.svg)](https://codecov.io/gh/HPacquee/AdventOfCode21)
+[![codecov](https://codecov.io/gh/HPacquee/AdventOfCode21/branch/main/graph/badge.svg?token=oZQLjdmJoP)](https://codecov.io/gh/HPacquee/AdventOfCode21)
 
 This repo contains my Advent of Code 2021 solutions in Java 17.
 
