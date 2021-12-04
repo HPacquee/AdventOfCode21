@@ -37,6 +37,10 @@ public class PuzzleInputFetcher {
         _sessionTokenPath = sessionTokenPath;
     }
 
+
+    public String getPuzzleInput(Class clazz) {
+        return getPuzzleInput(Integer.parseInt(clazz.getSimpleName().replace("Puzzle", "")));
+    }
     /**
      * Fetches the given day's puzzle input. It will try to fetch first from the in-memory cache, then the local disk,
      * and finally the Advent of Code site (storing the input to the local disk to avoid further fetches).

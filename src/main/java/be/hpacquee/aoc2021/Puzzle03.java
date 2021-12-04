@@ -11,11 +11,6 @@ public class Puzzle03 extends AbstractPuzzle {
     }
 
     @Override
-    public int getDay() {
-        return 3;
-    }
-
-    @Override
     public String solvePart1() {
         List<String> strings = getPuzzleInput().lines().toList();
         long[] totalOnes = new long[strings.get(0).length()];
@@ -24,7 +19,7 @@ public class Puzzle03 extends AbstractPuzzle {
         StringBuilder result = new StringBuilder();
         StringBuilder inverse = new StringBuilder();
         for (int i = 0; i < strings.get(0).length(); i++) {
-            if(totalOnes[i] > totalZeroes[i]) {
+            if (totalOnes[i] > totalZeroes[i]) {
                 result.append("1");
                 inverse.append("0");
             } else {
@@ -58,7 +53,7 @@ public class Puzzle03 extends AbstractPuzzle {
             long[] totalZeroes = new long[itemList.get(0).length()];
             getTotalOnesAndZeroes(itemList, totalOnes, totalZeroes);
             int finalI = i;
-            if(totalOnes[i] >= totalZeroes[i]) {
+            if (totalOnes[i] >= totalZeroes[i]) {
                 itemList = itemList.stream().filter(s -> s.charAt(finalI) == whenBiggerOrEqualChar).collect(Collectors.toList());
             } else {
                 itemList = itemList.stream().filter(s -> s.charAt(finalI) == whenSmallerChar).collect(Collectors.toList());
@@ -72,10 +67,10 @@ public class Puzzle03 extends AbstractPuzzle {
         strings.forEach(s ->
         {
             for (int i = 0; i < s.length(); i++) {
-                if(s.charAt(i) == '1') {
+                if (s.charAt(i) == '1') {
                     totalOnes[i]++;
                 }
-                if(s.charAt(i) == '0') {
+                if (s.charAt(i) == '0') {
                     totalZeroes[i]++;
                 }
             }

@@ -26,7 +26,9 @@ public abstract class AbstractPuzzle {
      * The day number of the puzzle.
      * @return the day number of the puzzle
      */
-    public abstract int getDay();
+    public int getDay() {
+        return Integer.parseInt(getClass().getSimpleName().replace("Puzzle", ""));
+    };
 
     /**
      * Returns the solution to part 1 of the puzzle.

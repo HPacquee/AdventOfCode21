@@ -1,6 +1,6 @@
 package be.hpacquee.aoc2021;
 
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Puzzle01 extends AbstractPuzzle {
     public Puzzle01(String puzzleInput) {
@@ -8,42 +8,31 @@ public class Puzzle01 extends AbstractPuzzle {
     }
 
     @Override
-    public int getDay() {
-        return 1;
-    }
-
-    @Override
     public String solvePart1() {
-        final int[] count = {0};
-        final int[] prev = {-1};
+        final AtomicInteger count = new AtomicInteger(0);
+        final AtomicInteger prev = new AtomicInteger(Integer.MAX_VALUE);
         getPuzzleInput().lines()
                 .mapToInt(Integer::parseInt)
                 .forEach(value -> {
-                    if(prev[0] == -1) {
-                        prev[0] = value;
+                    if(prev.get() < value) {
+                        count.incrementAndGet();
                     }
-                    if(prev[0] < value) {
-                        count[0]++;
-                    }
-                    prev[0] = value;
+                    prev.set(value);
                 });
-        return count[0] + "";
+        return String.valueOf(count.get());
     }
 
     @Override
     public String solvePart2() {
         int[] inputs = getPuzzleInput().lines().mapToInt(Integer::parseInt).toArray();
-        int count = 0;
-        int prev = -1;
+        final AtomicInteger count = new AtomicInteger(0);
+        final AtomicInteger prev = new AtomicInteger(Integer.MAX_VALUE);
         for (int i = 0; i < inputs.length - 2; i++) {
             int sum = inputs[i] + inputs[i + 1] + inputs[i + 2];
-            if(prev == -1) {
-                prev = sum;
+            if(prev.get() < sum) {
+                count.incrementAndGet();
             }
-            if(prev < sum) {
-                count ++;
-            }
-            prev = sum;
+            prev.set(sum);
         }
         return count + "";
     }
