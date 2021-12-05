@@ -33,7 +33,7 @@ public class Puzzle04 extends AbstractPuzzle {
         List<Board> boards = getBoards(strings);
         AtomicInteger winner = new AtomicInteger(-1);
         for (Integer number : extractDrawnNumber(strings.get(0))) {
-            boards.stream().filter(board -> board.allNumbers.contains(number) && !board.hasWon)
+            boards.stream().filter(board -> !board.hasWon && board.allNumbers.contains(number))
                     .forEach(board -> winner.set(board.crossNumber(number)));
         }
         return String.valueOf(winner.get());
