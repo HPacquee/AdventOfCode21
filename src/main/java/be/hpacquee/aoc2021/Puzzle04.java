@@ -85,7 +85,7 @@ public class Puzzle04 extends AbstractPuzzle {
         }
 
         private boolean cardHasBingo() {
-            if (totalCrosses > 5) {
+            if (totalCrosses >= 5) {
                 for (int i = 0; i < 5; i++) {
                     int horizontalSum = 0;
                     int verticalSum = 0;
