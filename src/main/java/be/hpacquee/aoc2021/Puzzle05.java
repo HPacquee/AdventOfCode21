@@ -17,8 +17,8 @@ public class Puzzle05 extends AbstractPuzzle {
         return String.valueOf(pipes.stream()
                 .flatMap(pipe -> getPointsBetween(pipe).stream())
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-                .entrySet()
-                .stream().filter(entry -> entry.getValue() >= 2)
+                .values()
+                .stream().filter(value -> value >= 2)
                 .count());
     }
 
@@ -28,13 +28,15 @@ public class Puzzle05 extends AbstractPuzzle {
         return String.valueOf(pipes.stream()
                 .flatMap(pipe -> getPointsBetween(pipe, false).stream())
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-                .entrySet()
-                .stream().filter(entry -> entry.getValue() >= 2)
+                .values()
+                .stream().filter(value -> value >= 2)
                 .count());
 
     }
 
-    record Coordinate(Integer x, Integer y) {}
+    record Coordinate(Integer x, Integer y) {
+    }
+
     record Pipe(Integer x1, Integer y1, Integer x2, Integer y2) {
         static Pipe of(String input) {
             String[] twoParts = input.split(" -> ");
