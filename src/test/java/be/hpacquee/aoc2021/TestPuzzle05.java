@@ -35,7 +35,7 @@ public class TestPuzzle05 extends BasePuzzleTest {
 
     @Test
     void testGetPointsBetween() {
-        List<Puzzle05.Coordinate> pointsBetween = Puzzle05.getPointsBetween(0, 0, 2, 2);
+        List<Puzzle05.Coordinate> pointsBetween = Puzzle05.getPointsBetween(new Puzzle05.Pipe(0, 0, 2, 2), false);
         assertEquals(0, pointsBetween.get(0).x());
         assertEquals(0, pointsBetween.get(0).y());
         assertEquals(1, pointsBetween.get(1).x());
@@ -43,7 +43,19 @@ public class TestPuzzle05 extends BasePuzzleTest {
         assertEquals(2, pointsBetween.get(2).x());
         assertEquals(2, pointsBetween.get(2).y());
 
-        pointsBetween = Puzzle05.getPointsBetween(0, 2, 2, 0);
+        pointsBetween = Puzzle05.getPointsBetween(new Puzzle05.Pipe(0, 9, 0, 5));
+        assertEquals(0, pointsBetween.get(0).x());
+        assertEquals(5, pointsBetween.get(0).y());
+        assertEquals(0, pointsBetween.get(1).x());
+        assertEquals(6, pointsBetween.get(1).y());
+        assertEquals(0, pointsBetween.get(2).x());
+        assertEquals(7, pointsBetween.get(2).y());
+        assertEquals(0, pointsBetween.get(3).x());
+        assertEquals(8, pointsBetween.get(3).y());
+        assertEquals(0, pointsBetween.get(4).x());
+        assertEquals(9, pointsBetween.get(4).y());
+
+        pointsBetween = Puzzle05.getPointsBetween(new Puzzle05.Pipe(0, 2, 2, 0), false);
         assertEquals(0, pointsBetween.get(0).x());
         assertEquals(2, pointsBetween.get(0).y());
         assertEquals(1, pointsBetween.get(1).x());
@@ -51,7 +63,7 @@ public class TestPuzzle05 extends BasePuzzleTest {
         assertEquals(2, pointsBetween.get(2).x());
         assertEquals(0, pointsBetween.get(2).y());
 
-        pointsBetween = Puzzle05.getPointsBetween(2, 0, 0, 2);
+        pointsBetween = Puzzle05.getPointsBetween(new Puzzle05.Pipe(2, 0, 0, 2), false);
         assertEquals(2, pointsBetween.get(0).x());
         assertEquals(0, pointsBetween.get(0).y());
         assertEquals(1, pointsBetween.get(1).x());
@@ -59,7 +71,7 @@ public class TestPuzzle05 extends BasePuzzleTest {
         assertEquals(0, pointsBetween.get(2).x());
         assertEquals(2, pointsBetween.get(2).y());
 
-        pointsBetween = Puzzle05.getPointsBetween(2, 2, 0, 0);
+        pointsBetween = Puzzle05.getPointsBetween(new Puzzle05.Pipe(2, 2, 0, 0), false);
         assertEquals(2, pointsBetween.get(0).x());
         assertEquals(2, pointsBetween.get(0).y());
         assertEquals(1, pointsBetween.get(1).x());
@@ -67,7 +79,7 @@ public class TestPuzzle05 extends BasePuzzleTest {
         assertEquals(0, pointsBetween.get(2).x());
         assertEquals(0, pointsBetween.get(2).y());
 
-        pointsBetween = Puzzle05.getPointsBetween(5, 5, 8, 2);
+        pointsBetween = Puzzle05.getPointsBetween(new Puzzle05.Pipe(5, 5, 8, 2), false);
         assertEquals(5, pointsBetween.get(0).x());
         assertEquals(5, pointsBetween.get(0).y());
         assertEquals(6, pointsBetween.get(1).x());
