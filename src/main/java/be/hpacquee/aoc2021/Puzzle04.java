@@ -22,7 +22,12 @@ public class Puzzle04 extends AbstractPuzzle {
             }
             boards.stream()
                     .filter(board -> board.allNumbers.contains(number))
-                    .forEach(board -> score.set(board.crossNumber(number)));
+                    .forEach(board -> {
+                        Integer win = board.crossNumber(number);
+                        if(win != -1) {
+                            score.set(win);
+                        }
+                    });
         }
         return "No winners today";
     }
