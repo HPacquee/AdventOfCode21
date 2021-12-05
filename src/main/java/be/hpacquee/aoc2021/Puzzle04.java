@@ -2,9 +2,7 @@ package be.hpacquee.aoc2021;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -16,28 +14,27 @@ public class Puzzle04 extends AbstractPuzzle {
     @Override
     public String solvePart1() {
         List<String> strings = getPuzzleInput().lines().collect(Collectors.toList());
-        String numbersDrawn = strings.get(0);
-        strings.remove(0);
-        strings.remove(0);
-        List<Board> boards = new ArrayList<>();
-        while (strings.size() != 0) {
-            boards.add(new Board(strings.get(0), strings.get(1), strings.get(2), strings.get(3), strings.get(4)));
-            try {
-                for (int i = 0; i < 6; i++) {
-                    strings.remove(0);
-                }
-            } catch (Exception e) {
+        List<Board> boards = getBoards(strings);
+        AtomicInteger score = new AtomicInteger(-1);
+        for (Integer number  : extractDrawnNumber(strings.get(0))) {
+            if (score.get() != -1) {
+                return String.valueOf(score.get());
             }
+            boards.stream()
+                    .filter(board -> board.allNumbers.contains(number))
+                    .forEach(board -> score.set(board.crossNumber(number)));
         }
+        return "No winners today";
+    }
+
+    @Override
+    public String solvePart2() {
+        List<String> strings = getPuzzleInput().lines().collect(Collectors.toList());
+        List<Board> boards = getBoards(strings);
         AtomicInteger winner = new AtomicInteger(-1);
-        for (String number : Arrays.stream(numbersDrawn.split(",")).toList()) {
-            if ( winner.get() != -1)
-                break;
-        boards.forEach(board -> {
-                Integer win = board.crossNumber(Integer.parseInt(number));
-                if(win != -1)
-                    winner.set(win);
-            });
+        for (Integer number : extractDrawnNumber(strings.get(0))) {
+            boards.stream().filter(board -> board.allNumbers.contains(number) && !board.hasWon)
+                    .forEach(board -> winner.set(board.crossNumber(number)));
         }
         return String.valueOf(winner.get());
     }
@@ -47,60 +44,55 @@ public class Puzzle04 extends AbstractPuzzle {
         int[][] bingoCardCrosses = new int[5][5];
         int totalCrosses = 0;
         boolean hasWon = false;
+        Set<Integer> allNumbers = new HashSet<>();
 
-        Board(String row1, String row2, String row3, String row4, String row5) {
-            bingoCard[0] = Arrays.stream(row1.split(" ")).filter(s -> !s.isBlank()).mapToInt(Integer::parseInt).toArray();
-            bingoCard[1] = Arrays.stream(row2.split(" ")).filter(s -> !s.isBlank()).mapToInt(Integer::parseInt).toArray();
-            bingoCard[2] = Arrays.stream(row3.split(" ")).filter(s -> !s.isBlank()).mapToInt(Integer::parseInt).toArray();
-            bingoCard[3] = Arrays.stream(row4.split(" ")).filter(s -> !s.isBlank()).mapToInt(Integer::parseInt).toArray();
-            bingoCard[4] = Arrays.stream(row5.split(" ")).filter(s -> !s.isBlank()).mapToInt(Integer::parseInt).toArray();
+        public Board(List<String> inputs) {
+            for (int i = 0; i < inputs.size(); i++) {
+                int j = 0;
+                for (String value : inputs.get(i).split(" ")) {
+                    if(!value.isBlank()) {
+                        int inputNumber = Integer.parseInt(value);
+                        bingoCard[i][j++] = inputNumber;
+                        allNumbers.add(inputNumber);
+                    }
+                }
+            }
         }
 
         public Integer crossNumber(int number) {
-            boolean gotOne = false;
+            boolean crossedOne = false;
+            outside:
             for (int i = 0; i < 5; i++) {
-                if (!gotOne) {
                     for (int j = 0; j < 5; j++) {
-                        if (!gotOne && bingoCard[i][j] == number) {
-                            gotOne = true;
+                        if (bingoCard[i][j] == number) {
+                            allNumbers.remove(number);
                             totalCrosses++;
                             bingoCardCrosses[i][j] = 1;
+                            crossedOne = true;
+                            break outside;
                         }
                     }
                 }
+            if (crossedOne && cardHasBingo()) {
+                return getSumOfUnmarked() * number;
+            } else {
+                return -1;
             }
-            if (gotOne) {
-                if (didIWin()) {
-                    return getSumOfUnmarked() * number;
-                }
-            }
-
-            return -1;
         }
 
         private Integer getSumOfUnmarked() {
-            int sum = 0;
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if (bingoCardCrosses[i][j] == 0) {
-                        sum += bingoCard[i][j];
-                    }
-                }
-            }
-            return sum;
+            return allNumbers.stream().reduce(0, Integer::sum);
         }
 
-        private boolean didIWin() {
+        private boolean cardHasBingo() {
             if (totalCrosses > 5) {
                 for (int i = 0; i < 5; i++) {
-                    if (Arrays.stream(bingoCardCrosses[i]).sum() == 5) {
-                        this.hasWon = true;
-                        return true;
-                    }
+                    int horizontalSum = 0;
                     int verticalSum = 0;
                     for (int j = 0; j < 5; j++) {
                         verticalSum += bingoCardCrosses[j][i];
-                        if (verticalSum == 5) {
+                        horizontalSum += bingoCardCrosses[i][j];
+                        if (verticalSum == 5 || horizontalSum == 5) {
                             this.hasWon = true;
                             return true;
                         }
@@ -112,32 +104,17 @@ public class Puzzle04 extends AbstractPuzzle {
         }
     }
 
-    @Override
-    public String solvePart2() {
-        List<String> strings = getPuzzleInput().lines().collect(Collectors.toList());
-        String numbersDrawn = strings.get(0);
-        strings.remove(0);
-        strings.remove(0);
-        List<Board> boards = new ArrayList<>();
-        while (strings.size() != 0) {
-            boards.add(new Board(strings.get(0), strings.get(1), strings.get(2), strings.get(3), strings.get(4)));
-            try {
-                for (int i = 0; i < 6; i++) {
-                    strings.remove(0);
-                }
-            } catch (Exception e) {
-            }
-        }
-        AtomicInteger winner = new AtomicInteger(-1);
-        for (String number : Arrays.stream(numbersDrawn.split(",")).toList()) {
-            boards.stream().filter(board -> !board.hasWon).forEach(board -> {
-                Integer win = board.crossNumber(Integer.parseInt(number));
-                if(win != -1)
-                    winner.set(win);
-            });
-        }
-        return String.valueOf(winner.get());
+    private int[] extractDrawnNumber(String numbersDrawn) {
+        return Arrays.stream(numbersDrawn.split(",")).mapToInt(Integer::parseInt).toArray();
+    }
 
+    @NotNull
+    private List<Board> getBoards(List<String> strings) {
+        List<Board> boards = new ArrayList<>();
+        for (int i = 2; i < strings.size(); i += 6) {
+            boards.add(new Board(strings.subList(i, i + 5)));
+        }
+        return boards;
     }
 
 }
