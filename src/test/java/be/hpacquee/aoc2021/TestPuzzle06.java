@@ -15,13 +15,13 @@ public class TestPuzzle06 extends BasePuzzleTest {
     @Test
     public void testPart1Example1() {
         var puzzle = new Puzzle06(puzzleInput);
-        assertEquals(puzzle.solvePart1(), "5");
+        assertEquals(puzzle.solvePart1(), "5934");
     }
 
     @Test
     public void testPart2Example1() {
         var puzzle = new Puzzle06(puzzleInput);
-        assertEquals(puzzle.solvePart2(), "12");
+        assertEquals(puzzle.solvePart2(), "26984457539");
     }
 
 }
