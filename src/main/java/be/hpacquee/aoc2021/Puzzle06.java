@@ -13,56 +13,30 @@ public class Puzzle06 extends AbstractPuzzle {
     @Override
     public String solvePart1() {
         List<Integer> lanternfish = Arrays.stream(getPuzzleInput().lines().toList().get(0).split(",")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
-        for (int days = 0; days < 80; days++) {
-            List<Integer> newLanternFish = new ArrayList<>();
-            for (int i = 0; i < lanternfish.size(); i++) {
-                Integer fish = lanternfish.get(i);
-                if(fish == 0) {
-                    newLanternFish.add(8);
-                    fish=6;
-                } else {
-                    fish--;
-                }
-                lanternfish.set(i, fish);
-            }
-            lanternfish.addAll(newLanternFish);
-        }
-        return String.valueOf(lanternfish.size());
+        return reproduceFish(lanternfish, 80);
     }
 
     @Override
     public String solvePart2() {
         List<Integer> lanternfish = Arrays.stream(getPuzzleInput().lines().toList().get(0).split(",")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
-        return reproduceFish(lanternfish);
+        return reproduceFish(lanternfish, 256);
     }
 
-    private String reproduceFish(List<Integer> lanternfish) {
-        try {
-            reproduce(lanternfish.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting())), 1);
-        } catch (DoneLooping dl) {
-            return String.valueOf(dl.totalCount);
-        }
-        return "";
+    private String reproduceFish(List<Integer> lanternfish, int days) {
+        return String.valueOf(reproduce(lanternfish.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting())), 1, days));
     }
 
-    private void reproduce(Map<Integer, Long> fishCount, int day) throws DoneLooping{
-        if(day > 256) {
-            throw new DoneLooping(fishCount.values().stream().reduce(Long::sum).get());
-        }
-        Map<Integer, Long> newMap = new HashMap<>();
-        for (int i = 1; i <= 8; i++) {
-            newMap.put(i-1, fishCount.getOrDefault(i, 0L));
-        }
-        newMap.put(8, fishCount.getOrDefault(0, 0L));
-        newMap.put(6, newMap.getOrDefault(6, 0L) + fishCount.getOrDefault(0, 0L));
-        reproduce(newMap, day+1);
-    }
-
-    private static class DoneLooping extends Throwable{
-        Long totalCount;
-
-        public DoneLooping(Long totalCount) {
-            this.totalCount = totalCount;
+    private Long reproduce(Map<Integer, Long> fishCount, int day, int days) {
+        if(day <= days) {
+            Map<Integer, Long> newMap = new HashMap<>();
+            for (int i = 1; i <= 8; i++) {
+                newMap.put(i - 1, fishCount.getOrDefault(i, 0L));
+            }
+            newMap.put(8, fishCount.getOrDefault(0, 0L));
+            newMap.put(6, newMap.getOrDefault(6, 0L) + fishCount.getOrDefault(0, 0L));
+            return reproduce(newMap, day + 1, days);
+        } else {
+            return fishCount.values().stream().reduce(Long::sum).get();
         }
     }
 }
