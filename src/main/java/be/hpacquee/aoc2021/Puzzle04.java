@@ -65,31 +65,32 @@ public class Puzzle04 extends AbstractPuzzle {
         }
 
         public Integer crossNumber(int number) {
-            boolean crossedOne = false;
-            outside:
-            for (int i = 0; i < 5; i++) {
-                    for (int j = 0; j < 5; j++) {
-                        if (bingoCard[i][j] == number) {
-                            allNumbers.remove(number);
-                            totalCrosses++;
-                            bingoCardCrosses[i][j] = 1;
-                            crossedOne = true;
-                            break outside;
-                        }
-                    }
-                }
-            if (crossedOne && cardHasBingo()) {
+            if (doIHaveIt(number) && didIWin()) {
                 return getSumOfUnmarked() * number;
             } else {
                 return -1;
             }
         }
 
+        public boolean doIHaveIt(int number) {
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    if (bingoCard[i][j] == number) {
+                        allNumbers.remove(number);
+                        totalCrosses++;
+                        bingoCardCrosses[i][j] = 1;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         private Integer getSumOfUnmarked() {
             return allNumbers.stream().reduce(0, Integer::sum);
         }
 
-        private boolean cardHasBingo() {
+        private boolean didIWin() {
             if (totalCrosses >= 5) {
                 for (int i = 0; i < 5; i++) {
                     int horizontalSum = 0;
