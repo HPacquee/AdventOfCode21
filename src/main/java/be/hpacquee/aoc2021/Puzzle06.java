@@ -11,7 +11,7 @@ public class Puzzle06 extends AbstractPuzzle {
 
     @Override
     public String solvePart1() {
-        Map<Integer, Long> initialFishCount = Arrays.stream(getPuzzleInput().split(","))
+        Map<Integer, Long> initialFishCount = Arrays.stream(getPuzzleInput().lines().toList().get(0).split(","))
                 .mapToInt(Integer::parseInt)
                 .boxed()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
@@ -20,7 +20,7 @@ public class Puzzle06 extends AbstractPuzzle {
 
     @Override
     public String solvePart2() {
-        Map<Integer, Long> initialFishCount = Arrays.stream(getPuzzleInput().split(","))
+        Map<Integer, Long> initialFishCount = Arrays.stream(getPuzzleInput().lines().toList().get(0).split(","))
                 .mapToInt(Integer::parseInt)
                 .boxed()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
