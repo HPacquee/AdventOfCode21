@@ -15,8 +15,14 @@ public class Main {
         List<AbstractPuzzle> puzzles = INIT_ALL_PUZZLES ? initAllPuzzles() : List.of(initLastPuzzle());
         puzzles.forEach(puzzle -> {
             var day = String.format("%02d", puzzle.getDay());
+            long start = System.nanoTime();
             System.out.println("Day " + day + " Part 1: " + puzzle.solvePart1());
+            long end = System.nanoTime();
+            System.out.println("Execution time: " + ((double)(end - start) / 1000000) + "ms");
+            start = System.nanoTime();
             System.out.println("Day " + day + " Part 2: " + puzzle.solvePart2());
+            end = System.nanoTime();
+            System.out.println("Execution time: " + ((double)(end - start) / 1000000) + "ms");
         });
     }
 
