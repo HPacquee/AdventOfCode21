@@ -8,9 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestPuzzle06 extends BasePuzzleTest {
 
-    private final String puzzleInput = """
-            3,4,3,1,2
-            """;
+    private final String puzzleInput = "3,4,3,1,2";
 
     @Test
     public void testPart1Example1() {
