@@ -37,7 +37,7 @@ public class Puzzle06 extends AbstractPuzzle {
             newFishCount.put(6, newFishCount.getOrDefault(6, 0L) + fishCount.getOrDefault(0, 0L));
             return reproduce(newFishCount, day + 1, days);
         } else {
-            return String.valueOf(fishCount.values().stream().reduce(Long::sum).get());
+            return String.valueOf(fishCount.values().stream().reduce(Long::sum).orElseThrow());
         }
     }
 }
