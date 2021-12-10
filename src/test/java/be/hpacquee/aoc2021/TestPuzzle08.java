@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,4 +36,11 @@ public class TestPuzzle08 extends BasePuzzleTest {
         var puzzle = new Puzzle08(puzzleInput);
         assertEquals(puzzle.solvePart2(), "61229");
     }
+
+    @Test
+    public void testPart1Example3() {
+        var puzzle = new Puzzle08("bfdcga cgdfe egfda cbfeda ec efc gcfbd ebcg gdfbec adcgfeb | bgdfc ec dfgae gefcd");
+        assertEquals(puzzle.solvePart2(), "5123");
+    }
+
 }

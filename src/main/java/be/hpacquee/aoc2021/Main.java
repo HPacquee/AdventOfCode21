@@ -18,11 +18,11 @@ public class Main {
             long start = System.nanoTime();
             System.out.println("Day " + day + " Part 1: " + puzzle.solvePart1());
             long end = System.nanoTime();
-            System.out.println("Execution time: " + ((double)(end - start) / 1000000) + "ms");
+            System.out.println("Execution time: " + ((double) (end - start) / 1000000) + "ms");
             start = System.nanoTime();
             System.out.println("Day " + day + " Part 2: " + puzzle.solvePart2());
             end = System.nanoTime();
-            System.out.println("Execution time: " + ((double)(end - start) / 1000000) + "ms");
+            System.out.println("Execution time: " + ((double) (end - start) / 1000000) + "ms");
         });
     }
 
