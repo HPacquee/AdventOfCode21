@@ -3,7 +3,6 @@ package be.hpacquee.aoc2021;
 import java.util.*;
 
 import static be.hpacquee.aoc2021.Puzzle12.CaveType.*;
-import static java.util.Collections.frequency;
 
 public class Puzzle12 extends AbstractPuzzle {
 
