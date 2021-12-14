@@ -66,7 +66,7 @@ public class Puzzle13 extends AbstractPuzzle {
                 .replace("]", "")
                 .replace(",", "")
                 .replace(".", " ");
-        System.out.println(replace);
+        System.out.println(" " +replace);
     }
 
     @Override
