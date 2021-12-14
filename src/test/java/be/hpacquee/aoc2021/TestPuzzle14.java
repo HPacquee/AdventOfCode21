@@ -38,17 +38,4 @@ public class TestPuzzle14 extends BasePuzzleTest {
         var puzzle = new Puzzle14(puzzleInput);
         assertEquals(puzzle.solvePart2(), "2188189693529");
     }
-
-    @Test
-    void name() {
-        long sumH = 485345134L +
-                485345134L +
-                667587793L +
-                823172187L +
-                266514754L +
-                886418173L +
-                266514754L +
-                604341807L;
-        System.out.println(sumH);
-    }
 }
