@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class Main {
 
-    public static final boolean INIT_ALL_PUZZLES = true;
+    public static final boolean INIT_ALL_PUZZLES = false;
 
     public static void main(String[] args) {
         List<AbstractPuzzle> puzzles = INIT_ALL_PUZZLES ? initAllPuzzles() : List.of(initLastPuzzle());
